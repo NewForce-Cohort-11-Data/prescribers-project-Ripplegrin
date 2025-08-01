@@ -54,11 +54,15 @@ limit 1
 -- 	on drug.drug_name=prescription.drug_name
 -- order by total_drug_cost desc
 
--- b. Which drug (generic_name) has the hightest total cost per day? Bonus: Round your cost per day column to 2 decimal places. 
--- Google ROUND to see how this works.
+-- ***b. Which drug (generic_name) has the hightest total cost per day? Bonus: Round your cost per day column to 2 decimal places. 
+-- Google ROUND to see how this works. PIRFENIDONE
 
 
-
+-- select generic_name, round(total_drug_cost/365) as daily_cost
+-- 	from prescription
+-- 	left join drug
+-- 	on drug.drug_name=prescription.drug_name
+-- order by daily_cost desc
 
 
 
@@ -177,20 +181,27 @@ limit 1
 -- 					on prescriber.npi = prescription.npi
 -- where specialty_description = 'Pain Management' and nppes_provider_city = 'NASHVILLE' and drug.opioid_drug_flag = 'Y'
 
--- b. Next, report the number of claims per drug per prescriber. Be sure to include all combinations, whether or not the prescriber had any claims. 
+-- ***b. Next, report the number of claims per drug per prescriber. Be sure to include all combinations, whether or not the prescriber had any claims. 
 --You should report the npi, the drug name, and the number of claims (total_claim_count).
-select prescriber.npi, drug.drug_name, total_claim_count as total
-				from drug
-				left join prescription --gets opioid flag
-					on drug.drug_name = prescription.drug_name
-				left join prescriber --gets provider city
-					on prescriber.npi = prescription.npi
-where specialty_description = 'Pain Management' and nppes_provider_city = 'NASHVILLE' and drug.opioid_drug_flag = 'Y'
-order by total_claim_count desc
 
+-- select 
+-- p.npi, 
+-- drug.drug_name,
+-- total_claim_count as number_of_claims
 
-
+-- 				from drug
+-- 				left join prescription as p --gets opioid flag
+-- 					on drug.drug_name = p.drug_name
+-- 				left join prescriber --gets provider city
+-- 					on prescriber.npi = p.npi
+-- where specialty_description = 'Pain Management' and nppes_provider_city = 'NASHVILLE' and drug.opioid_drug_flag = 'Y'
+-- order by p.npi desc
 
 
 
 -- c. Finally, if you have not done so already, fill in any missing values for total_claim_count with 0. Hint - Google the COALESCE function.
+
+
+-- n/a?
+
+
