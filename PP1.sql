@@ -37,15 +37,36 @@ limit 1
 -- 	from prescription
 -- 	left join prescriber
 -- 	on prescriber.npi=prescription.npi
--- 	left join drug
+-- 	left join drug  --for drug flag
 -- 	on drug.drug_name = prescription.drug_name
 -- where opioid_drug_flag = 'Y'
 -- group by specialty_description -- combines all the same SD into one row
 -- order by sum(total_claim_count) desc
 
+-- **c. Challenge Question: Are there any specialties that appear in the prescriber table that have no associated prescriptions in the prescription table?
 
--- c. Challenge Question: Are there any specialties that appear in the prescriber table that have no associated prescriptions in the prescription table?
--- d. Difficult Bonus: Do not attempt until you have solved all other problems! For each specialty, report the percentage of total claims by that specialty which are for opioids. Which specialties have a high percentage of opioids?
+-- select specialty_description, drug_name
+-- from prescriber as p1
+-- left join prescription as p2
+-- 	on p2.npi=p1.npi
+-- where drug_name is null
+-- group by specialty_description, drug_name
+
+
+-- d. Difficult Bonus: Do not attempt until you have solved all other problems! 
+--For each specialty, report the percentage of total claims by that specialty which are for opioids. 
+--Which specialties have a high percentage of opioids?
+
+-- this gets the basic info and will be used as a skeleton
+-- select specialty_description, sum(total_claim_count) 
+-- 	from prescription
+-- 	left join prescriber
+-- 	on prescriber.npi=prescription.npi
+-- group by specialty_description -- combines all the same SD into one row
+-- order by sum(total_claim_count) desc
+
+
+
 
 -- ****3A*. Which drug (generic_name) had the highest total drug cost? pirfenidone
 -- select generic_name, total_drug_cost
@@ -88,16 +109,22 @@ limit 1
 -- select drug_name, drug_type
 
 
--- b. Building off of the query you wrote for part a, determine whether more was spent (total_drug_cost) on opioids or on antibiotics.
+-- **b. Building off of the query you wrote for part a, determine whether more was spent (total_drug_cost) on opioids or on antibiotics. opiods
 -- Hint: Format the total costs as MONEY for easier comparision.
--- select drug_name,
+-- select  
 -- 	Case
 -- 		WHEN opioid_drug_flag = 'Y' then 'opioid'
 -- 		WHEN antibiotic_drug_flag = 'Y' then 'antibiotic'
--- 		ELSE 'neither'
--- end as drug_type
+-- 		else null
+-- 		end as drug_type,
+-- sum(total_drug_cost) as MONEY
+ 
+-- from prescription
+-- left join drug
+-- on drug.drug_name=prescription.drug_name
 
--- from drug
+-- group by drug_type
+
 
 
 
