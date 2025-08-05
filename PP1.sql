@@ -58,12 +58,15 @@ limit 1
 --Which specialties have a high percentage of opioids?
 
 -- this gets the basic info and will be used as a skeleton
--- select specialty_description, sum(total_claim_count) 
--- 	from prescription
--- 	left join prescriber
--- 	on prescriber.npi=prescription.npi
--- group by specialty_description -- combines all the same SD into one row
--- order by sum(total_claim_count) desc
+select specialty_description, sum(total_claim_count) as Claims
+	from prescription
+	left join prescriber
+	on prescriber.npi=prescription.npi
+	left join drug  --for drug flag
+	on drug.drug_name = prescription.drug_name
+where opioid_drug_flag = 'Y'
+group by specialty_description -- combines all the same SD into one row
+order by sum(total_claim_count) desc
 
 
 
